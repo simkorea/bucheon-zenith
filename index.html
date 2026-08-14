@@ -369,6 +369,73 @@ a{color:inherit;text-decoration:none}
 .pw-dots i.on{background:var(--taupe-l);transform:scale(1.35)}
 @media(max-width:1023px){.pw-dots{display:flex}}
 @media(prefers-reduced-motion:reduce){.pw.on,.pw-in{animation:none}.pw-dots i{transition:none}}
+
+/* ══════════ 다중페이지(PC) / 원페이지(모바일) ══════════
+   기본은 전부 보이는 상태다. 전환 스크립트가 죽어도 콘텐츠가 사라지지 않는다. */
+.page{display:block}
+@media(min-width:1024px){
+  body.pc .page{display:none}
+  body.pc .page.active{display:block}
+}
+@media(max-width:1023px){ .page{display:block!important} }
+
+/* 페이지 상단 타이틀 (PC 전용) */
+.phead{display:none}
+@media(min-width:1024px){
+  body.pc .phead{display:block;padding:clamp(74px,8vw,110px) 0 0;text-align:center}
+  .phead .en{font-family:var(--latin);font-size:13px;letter-spacing:.5em;color:var(--taupe);text-transform:uppercase}
+  .phead h2{margin-top:14px;font-family:var(--serif);font-size:clamp(30px,3.4vw,44px);font-weight:400;letter-spacing:.06em;color:var(--navy)}
+  .phead .bc{margin-top:14px;font-size:12.5px;color:var(--ink-soft)}
+  .phead .bc b{color:var(--navy);font-weight:600}
+}
+
+/* ══════════ GNB 드롭다운 ══════════ */
+.gnb{position:relative}
+.gnb>li{position:relative}
+.gnb .sub{
+  position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(6px);
+  min-width:158px;background:#fff;border:1px solid var(--line);padding:8px 0;
+  opacity:0;visibility:hidden;transition:opacity .22s,transform .22s,visibility .22s;
+  box-shadow:0 16px 34px -18px rgba(14,3,59,.34);z-index:60;
+}
+.gnb>li:hover .sub,.gnb>li:focus-within .sub{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.gnb .sub a{display:block;padding:9px 18px;font-size:13.5px;color:var(--ink-soft);white-space:nowrap;transition:color .2s,background-color .2s}
+.gnb .sub a:hover{color:var(--navy);background:var(--cream)}
+.gnb>li>a.on{color:var(--navy)}
+@media(max-width:1023px){ .gnb .sub{display:none} }
+
+/* 모바일 메뉴 그룹 */
+.navov .grp{width:100%;max-width:340px;margin:0 auto;border-bottom:1px solid rgba(255,255,255,.14);padding:4px 0}
+.navov .grp>b{display:block;padding:14px 4px 6px;font-size:12px;letter-spacing:.2em;color:var(--taupe-l);font-family:var(--latin);text-transform:uppercase}
+.navov .grp a{display:block;padding:11px 4px;font-size:16px}
+
+/* ══════════ 평면 탭 ══════════ */
+.utabs{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:clamp(24px,3vw,38px)}
+.utab{
+  padding:11px 20px;border:1px solid var(--line);background:#fff;cursor:pointer;
+  font-family:var(--sans);font-size:14px;font-weight:700;letter-spacing:-.01em;color:var(--ink-soft);
+  transition:background-color .22s,color .22s,border-color .22s;
+}
+.utab:hover{border-color:var(--navy);color:var(--navy)}
+.utab[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.upanel{display:none;margin-top:clamp(20px,2.6vw,32px)}
+.upanel.on{display:block;animation:uF .45s ease both}
+@keyframes uF{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.upanel img{width:100%;border:1px solid var(--line);background:#fff;cursor:zoom-in}
+
+/* ══════════ 큰 도면 이미지 ══════════ */
+.plan-fig{border:1px solid var(--line);background:#fff;margin-top:clamp(22px,3vw,36px)}
+.plan-fig img{width:100%;display:block;cursor:zoom-in}
+.plan-fig figcaption{padding:13px 16px;font-size:12.5px;color:var(--ink-soft);border-top:1px solid var(--line)}
+.zoomhint{display:inline-block;margin-left:8px;padding:2px 8px;background:var(--cream);color:var(--navy);font-size:11px;font-weight:700}
+
+/* ══════════ 라이트박스 ══════════ */
+.lb{position:fixed;inset:0;z-index:1300;background:rgba(8,4,28,.94);display:none;align-items:center;justify-content:center;padding:16px}
+.lb.on{display:flex}
+.lb-img{max-width:100%;max-height:92vh;overflow:auto;-webkit-overflow-scrolling:touch}
+.lb-img img{display:block;max-width:100%;height:auto;margin:0 auto}
+.lb-x{position:absolute;top:14px;right:14px;width:46px;height:46px;background:none;border:1px solid rgba(255,255,255,.45);color:#fff;font-size:20px;cursor:pointer;transition:background-color .22s}
+.lb-x:hover{background:rgba(255,255,255,.16)}
 </style>
 </head>
 <body>
@@ -377,34 +444,67 @@ a{color:inherit;text-decoration:none}
 <header class="hdr" id="hdr">
   <a href="#hero" class="brand">두산위브더제니스<em>부천</em></a>
   <ul class="gnb">
-    <li><a href="#overview">사업개요</a></li>
-    <li><a href="#premium">프리미엄</a></li>
-    <li><a href="#location">입지환경</a></li>
-    <li><a href="#schedule">분양일정</a></li>
-    <li><a href="#supply">공급안내</a></li>
-    <li><a href="#subscription">청약안내</a></li>
-    <li><a href="#contact">오시는 길</a></li>
+    <li><a href="#p-business" data-go="p-business">사업안내</a>
+      <div class="sub">
+        <a href="#p-business" data-go="p-business" data-to="overview">사업개요</a>
+        <a href="#p-business" data-go="p-business" data-to="brand">브랜드소개</a>
+        <a href="#p-business" data-go="p-business" data-to="contact">오시는 길</a>
+      </div></li>
+    <li><a href="#p-env" data-go="p-env">입지안내</a>
+      <div class="sub">
+        <a href="#p-env" data-go="p-env" data-to="location">입지환경</a>
+        <a href="#p-env" data-go="p-env" data-to="premium">프리미엄</a>
+      </div></li>
+    <li><a href="#p-complex" data-go="p-complex">단지안내</a>
+      <div class="sub">
+        <a href="#p-complex" data-go="p-complex" data-to="place">단지배치도</a>
+        <a href="#p-complex" data-go="p-complex" data-to="architecture">동·호수 배치도</a>
+        <a href="#p-complex" data-go="p-complex" data-to="special">단지특화</a>
+        <a href="#p-complex" data-go="p-complex" data-to="community">커뮤니티</a>
+      </div></li>
+    <li><a href="#p-unit" data-go="p-unit">세대안내</a>
+      <div class="sub">
+        <a href="#p-unit" data-go="p-unit" data-to="unit">평면안내</a>
+      </div></li>
+    <li><a href="#p-sale" data-go="p-sale">분양안내</a>
+      <div class="sub">
+        <a href="#p-sale" data-go="p-sale" data-to="schedule">분양일정</a>
+        <a href="#p-sale" data-go="p-sale" data-to="supply">공급안내</a>
+      </div></li>
+    <li><a href="#p-sub" data-go="p-sub">청약안내</a></li>
   </ul>
   <div class="hdr-r">
     <a class="tel" href="tel:1555-1087">1555-1087</a>
-    <button class="btn-reg" type="button" onclick="document.getElementById('register').scrollIntoView()">관심고객 등록</button>
+    <button class="btn-reg" type="button" data-go="p-reg" data-to="register">관심고객 등록</button>
     <button class="burger" id="burger" type="button" aria-label="메뉴 열기"><span></span><span></span><span></span></button>
   </div>
 </header>
 
 <nav class="navov" id="navov" role="navigation" aria-label="메인 네비게이션">
   <button class="close" id="navclose" type="button" aria-label="메뉴 닫기"></button>
-  <a href="#overview" data-nav>사업개요</a>
-  <a href="#premium" data-nav>프리미엄</a>
-  <a href="#location" data-nav>입지환경</a>
-  <a href="#schedule" data-nav>분양일정</a>
-  <a href="#supply" data-nav>공급안내</a>
-  <a href="#subscription" data-nav>청약안내</a>
-  <a href="#contact" data-nav>오시는 길</a>
-  <a href="#register" data-nav>관심고객 등록</a>
+  <div class="grp"><b>Business</b>
+    <a href="#overview" data-nav>사업개요</a>
+    <a href="#brand" data-nav>브랜드소개</a>
+    <a href="#contact" data-nav>오시는 길</a></div>
+  <div class="grp"><b>Location</b>
+    <a href="#location" data-nav>입지환경</a>
+    <a href="#premium" data-nav>프리미엄</a></div>
+  <div class="grp"><b>Complex</b>
+    <a href="#place" data-nav>단지배치도</a>
+    <a href="#architecture" data-nav>동·호수 배치도</a>
+    <a href="#special" data-nav>단지특화</a>
+    <a href="#community" data-nav>커뮤니티</a></div>
+  <div class="grp"><b>Unit</b>
+    <a href="#unit" data-nav>평면안내</a></div>
+  <div class="grp"><b>Sale</b>
+    <a href="#schedule" data-nav>분양일정</a>
+    <a href="#supply" data-nav>공급안내</a>
+    <a href="#subscription" data-nav>청약안내</a></div>
+  <div class="grp" style="border-bottom:0">
+    <a href="#register" data-nav style="color:var(--taupe-l);font-weight:700">관심고객 등록</a></div>
 </nav>
 
-<!-- ===================== HERO ===================== -->
+<div class="page active" id="p-home">
 <section class="hero" id="hero">
   <video class="hero-vid" autoplay muted loop playsinline preload="metadata"
          poster="./images/bucheon/hero-poster.jpg" aria-hidden="true">
@@ -418,12 +518,17 @@ a{color:inherit;text-decoration:none}
       소사역 더블역세권과 GTX-B(예정)를 곁에 둔<br>
       총 2,008세대, 두산건설 &middot; 쌍용건설 합작 단지
     </p>
-    <button class="hero-cta" type="button" onclick="document.getElementById('register').scrollIntoView()">관심고객 등록하기</button>
+    <button class="hero-cta" type="button" data-go="p-reg" data-to="register">관심고객 등록하기</button>
   </div>
   <p class="hero-note">※ 본 영상은 소비자의 이해를 돕기 위해 제작된 이미지로 실제와 다를 수 있습니다.</p>
 </section>
 
 <!-- ===================== 사업개요 ===================== -->
+</div><!-- /p-home -->
+
+<div class="page" id="p-business">
+  <div class="phead"><div class="en">Business</div><h2>사업 안내</h2>
+    <p class="bc">HOME &nbsp;&rsaquo;&nbsp; <b>사업안내</b> &nbsp;&rsaquo;&nbsp; 사업개요 · 브랜드소개 · 오시는 길</p></div>
 <section class="sec" id="overview">
   <div class="wrap">
     <div class="ov-head reveal">
@@ -461,7 +566,109 @@ a{color:inherit;text-decoration:none}
   </div>
 </section>
 
+<!-- ===================== 브랜드소개 ===================== -->
+<section class="sec band-cream" id="brand">
+  <div class="wrap">
+    <div class="ov-head reveal">
+      <div class="eyebrow ctr">Brand</div>
+      <h2 class="sec-title">브랜드 소개</h2>
+      <p class="lede">두산건설의 주거 브랜드 <strong>위브더제니스</strong>가 부천에 들어섭니다.</p>
+    </div>
+    <div class="subs reveal">
+      <div class="scard">
+        <h3>THE ZENITH</h3>
+        <ul>
+          <li>예술과 건축이 조화를 이루는 초고층 주거 브랜드</li>
+          <li>해운대 · 대구 · 평내호평역 N49 등에 적용</li>
+          <li>고층 스카이라인을 만드는 랜드마크 설계</li>
+        </ul>
+      </div>
+      <div class="scard">
+        <h3>두산건설</h3>
+        <ul>
+          <li>공동주택 브랜드 위브 · 위브더제니스 운영</li>
+          <li>본 사업의 시공사(쌍용건설과 컨소시엄)</li>
+        </ul>
+      </div>
+      <div class="scard">
+        <h3>쌍용건설</h3>
+        <ul>
+          <li>글로벌 세아그룹 계열 건설사</li>
+          <li>두산건설과 함께 본 사업을 시공합니다</li>
+        </ul>
+      </div>
+    </div>
+    <p class="tnote">※ 타 현장 이미지 및 브랜드 설명은 이해를 돕기 위한 것으로, 본 단지의 사양 · 마감과는 무관합니다.</p>
+  </div>
+</section>
+
 <!-- ===================== 프리미엄 ===================== -->
+<section class="sec band-cream" id="contact">
+  <div class="wrap">
+    <div class="ov-head reveal">
+      <div class="eyebrow ctr">Contact</div>
+      <h2 class="sec-title">오시는 길</h2>
+      <p class="lede">견본주택과 사업 현장의 위치를 확인하세요.</p>
+    </div>
+    <div class="maps reveal">
+      <div class="mapcard">
+        <img src="./images/bucheon/map-gallery.jpg" alt="두산위브더제니스 부천 견본주택 약도 — 부천시 원미구 상동" loading="lazy">
+        <div class="mc-b">
+          <h3>견본주택</h3>
+          <address>부천시 원미구 상동 529-3번지</address>
+        </div>
+      </div>
+      <div class="mapcard">
+        <img src="./images/bucheon/map-site.jpg" alt="두산위브더제니스 부천 사업 현장 약도 — 부천시 소사구 소사본동" loading="lazy">
+        <div class="mc-b">
+          <h3>사업 현장</h3>
+          <address>부천시 소사구 소사본동 88-39번지 일대</address>
+        </div>
+      </div>
+    </div>
+    <p class="tnote">※ 견본주택 운영 일정 및 방문 방법은 전화(1555-1087)로 문의해 주시기 바랍니다.</p>
+  </div>
+</section>
+
+<!-- ===================== 관심고객 등록 ===================== -->
+</div><!-- /p-business -->
+
+<div class="page" id="p-env">
+  <div class="phead"><div class="en">Location</div><h2>입지 안내</h2>
+    <p class="bc">HOME &nbsp;&rsaquo;&nbsp; <b>입지안내</b> &nbsp;&rsaquo;&nbsp; 입지환경 · 프리미엄</p></div>
+<section class="sec band-navy" id="location">
+  <div class="wrap">
+    <div class="split reveal">
+      <div class="figbox" style="background:#fff">
+        <img src="./images/bucheon/location-map.jpg"
+             alt="두산위브더제니스 부천 광역 입지도 — 소사역 1호선 서해선 및 주변 시설" loading="lazy">
+      </div>
+      <div>
+        <div class="eyebrow">Location</div>
+        <h2 class="sec-title" style="margin:16px 0 18px">역이 생활권<br>안으로 들어옵니다</h2>
+        <p class="lede" style="color:rgba(255,255,255,.82)">
+          단지 인근 <strong>소사역</strong>은 1호선과 서해선이 만나는 더블역세권입니다.
+          여기에 <strong>GTX-B(예정)</strong>가 더해지면 서울 접근성이 한층 넓어집니다.
+        </p>
+        <ul class="dist">
+          <li><span>소사역 (1호선 · 서해선)</span><span>도보권</span></li>
+          <li><span>GTX-B 노선</span><span>계획 · 예정</span></li>
+          <li><span>부천세종병원 / 가톨릭대 성모병원</span><span>인근</span></li>
+          <li><span>이마트 부천점 · 부천역 로데오거리</span><span>인근</span></li>
+          <li><span>스타필드 시티 · 롯데백화점</span><span>인근</span></li>
+          <li><span>성주산 · 원미산 · 소새울공원</span><span>인근</span></li>
+        </ul>
+        <p class="tnote">
+          ※ GTX-B 및 인근 정비사업은 계획 단계이며 노선 · 역 위치 · 개통 시기는
+          관계 기관의 계획에 따라 변경될 수 있습니다.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===================== 분양일정 ===================== -->
 <section class="sec band-cream" id="premium">
   <div class="wrap">
     <div class="ov-head reveal">
@@ -519,39 +726,159 @@ a{color:inherit;text-decoration:none}
 </section>
 
 <!-- ===================== 입지환경 ===================== -->
-<section class="sec band-navy" id="location">
+</div><!-- /p-env -->
+
+<div class="page" id="p-complex">
+  <div class="phead"><div class="en">Complex</div><h2>단지 안내</h2>
+    <p class="bc">HOME &nbsp;&rsaquo;&nbsp; <b>단지안내</b> &nbsp;&rsaquo;&nbsp; 단지배치도 · 동호수 · 단지특화 · 커뮤니티</p></div>
+<!-- ===================== 단지배치도 ===================== -->
+<section class="sec" id="place">
   <div class="wrap">
-    <div class="split reveal">
-      <div class="figbox" style="background:#fff">
-        <img src="./images/bucheon/location-map.jpg"
-             alt="두산위브더제니스 부천 광역 입지도 — 소사역 1호선 서해선 및 주변 시설" loading="lazy">
-      </div>
-      <div>
-        <div class="eyebrow">Location</div>
-        <h2 class="sec-title" style="margin:16px 0 18px">역이 생활권<br>안으로 들어옵니다</h2>
-        <p class="lede" style="color:rgba(255,255,255,.82)">
-          단지 인근 <strong>소사역</strong>은 1호선과 서해선이 만나는 더블역세권입니다.
-          여기에 <strong>GTX-B(예정)</strong>가 더해지면 서울 접근성이 한층 넓어집니다.
-        </p>
-        <ul class="dist">
-          <li><span>소사역 (1호선 · 서해선)</span><span>도보권</span></li>
-          <li><span>GTX-B 노선</span><span>계획 · 예정</span></li>
-          <li><span>부천세종병원 / 가톨릭대 성모병원</span><span>인근</span></li>
-          <li><span>이마트 부천점 · 부천역 로데오거리</span><span>인근</span></li>
-          <li><span>스타필드 시티 · 롯데백화점</span><span>인근</span></li>
-          <li><span>성주산 · 원미산 · 소새울공원</span><span>인근</span></li>
-        </ul>
-        <p class="tnote">
-          ※ GTX-B 및 인근 정비사업은 계획 단계이며 노선 · 역 위치 · 개통 시기는
-          관계 기관의 계획에 따라 변경될 수 있습니다.
-        </p>
-      </div>
+    <div class="ov-head reveal">
+      <div class="eyebrow ctr">Plot Plan</div>
+      <h2 class="sec-title">단지 배치도</h2>
+      <p class="lede">101동 ~ 107동, 공동주택 1,158세대와 오피스텔 261실이 배치됩니다.</p>
     </div>
+    <figure class="plan-fig reveal" data-lb="./images/bucheon/plan/place.jpg">
+      <img src="./images/bucheon/plan/place.jpg" alt="두산위브더제니스 부천 단지 배치도 — 101동부터 107동까지 동별 배치와 타입별 세대수" loading="lazy" width="1200" height="2006">
+      <figcaption>단지 배치도 <span class="zoomhint">클릭하면 확대</span></figcaption>
+    </figure>
+    <p class="tnote">※ 배치도는 소비자의 이해를 돕기 위해 제작된 것으로 실제와 차이가 있을 수 있으며, 인·허가 과정에서 변경될 수 있습니다.</p>
   </div>
 </section>
 
+<!-- ===================== 동·호수 배치도 ===================== -->
+<section class="sec band-cream" id="architecture">
+  <div class="wrap">
+    <div class="ov-head reveal">
+      <div class="eyebrow ctr">Architecture</div>
+      <h2 class="sec-title">동 &middot; 호수 배치도</h2>
+      <p class="lede">동별 · 라인별 주택형 배치를 확인하세요.</p>
+    </div>
+    <figure class="plan-fig reveal" data-lb="./images/bucheon/plan/architecture.jpg">
+      <img src="./images/bucheon/plan/architecture.jpg" alt="두산위브더제니스 부천 동·호수 배치도 — 동별 라인별 주택형 배치" loading="lazy" width="1200" height="1502">
+      <figcaption>동 &middot; 호수 배치도 <span class="zoomhint">클릭하면 확대</span></figcaption>
+    </figure>
+    <p class="tnote">※ 동 · 호수 배치는 인·허가 및 시공 과정에서 변경될 수 있습니다. 정확한 사항은 입주자모집공고문을 확인해 주세요.</p>
+  </div>
+</section>
 
-<!-- ===================== 분양일정 ===================== -->
+<!-- ===================== 단지특화 ===================== -->
+<section class="sec" id="special">
+  <div class="wrap">
+    <div class="ov-head reveal">
+      <div class="eyebrow ctr">Special</div>
+      <h2 class="sec-title">단지 특화</h2>
+      <p class="lede">소사역 더블 역세권과 한 정거장 거리의 GTX-B(예정). 도심 속 힐링 라이프를 담았습니다.</p>
+    </div>
+    <figure class="plan-fig reveal" data-lb="./images/bucheon/plan/complex.jpg">
+      <img src="./images/bucheon/plan/complex.jpg" alt="두산위브더제니스 부천 단지 특화 — 야간 항공 조감도" loading="lazy" width="1200" height="1130">
+      <figcaption>단지 특화 조감 <span class="zoomhint">클릭하면 확대</span></figcaption>
+    </figure>
+    <p class="tnote">※ 상기 이미지는 CG로 제작된 것으로 실제와 차이가 있습니다.</p>
+  </div>
+</section>
+
+<!-- ===================== 커뮤니티 ===================== -->
+<section class="sec band-cream" id="community">
+  <div class="wrap">
+    <div class="ov-head reveal">
+      <div class="eyebrow ctr">Community</div>
+      <h2 class="sec-title">커뮤니티</h2>
+      <p class="lede">건강 · 취미부터 아이들을 위한 공간까지, 멀티 커뮤니티가 계획되어 있습니다.</p>
+    </div>
+    <div class="subs reveal">
+      <div class="scard">
+        <h3>Public &amp; Culture</h3>
+        <ul>
+          <li>주민카페 &mdash; 104동 1층</li>
+          <li>독서실 &middot; 작은도서관 &mdash; 105동 1층 &middot; 지하 1층</li>
+        </ul>
+      </div>
+      <div class="scard">
+        <h3>Activity</h3>
+        <ul>
+          <li>피트니스 &middot; GX룸 &mdash; 106동 지하 3층</li>
+          <li>실내골프연습장 &middot; 스크린골프</li>
+          <li>선큰 &middot; 탈의실 &middot; 샤워실(남 &middot; 여)</li>
+        </ul>
+      </div>
+      <div class="scard">
+        <h3>Care</h3>
+        <ul>
+          <li>어린이집 &middot; 돌봄센터 &middot; 키즈스테이션</li>
+          <li>경로당 &middot; 주민회의실 &middot; 어린이놀이터</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="plan-fig reveal" data-lb="./images/bucheon/plan/community.jpg">
+      <img src="./images/bucheon/plan/community.jpg" alt="두산위브더제니스 부천 커뮤니티 배치 — 주민카페, 독서실, 작은도서관, GX룸, 피트니스, 골프연습장" loading="lazy" width="1200" height="3149">
+      <figcaption>커뮤니티 시설 배치 및 투시도 <span class="zoomhint">클릭하면 확대</span></figcaption>
+    </figure>
+    <p class="tnote">※ 커뮤니티 시설의 명칭 · 구성 · 위치 · 운영 방식은 인·허가 및 시공 과정에서 변경될 수 있습니다.</p>
+  </div>
+</section>
+</div><!-- /p-complex -->
+
+<div class="page" id="p-unit">
+  <div class="phead"><div class="en">Unit</div><h2>세대 안내</h2>
+    <p class="bc">HOME &nbsp;&rsaquo;&nbsp; <b>세대안내</b> &nbsp;&rsaquo;&nbsp; 평면안내</p></div>
+<!-- ===================== 평면안내 ===================== -->
+<section class="sec" id="unit">
+  <div class="wrap">
+    <div class="ov-head reveal">
+      <div class="eyebrow ctr">Unit Plan</div>
+      <h2 class="sec-title">평면 안내</h2>
+      <p class="lede">아파트 6개 타입과 오피스텔 2개 타입, 총 8개 평면입니다.</p>
+    </div>
+    <div class="utabs reveal" role="tablist" aria-label="주택형 선택">
+      <button class="utab" type="button" role="tab" id="ut-39oa" aria-controls="up-39oa" aria-selected="true">39OA</button>
+      <button class="utab" type="button" role="tab" id="ut-45oa" aria-controls="up-45oa" aria-selected="false">45OA</button>
+      <button class="utab" type="button" role="tab" id="ut-59a" aria-controls="up-59a" aria-selected="false">59A</button>
+      <button class="utab" type="button" role="tab" id="ut-59b" aria-controls="up-59b" aria-selected="false">59B</button>
+      <button class="utab" type="button" role="tab" id="ut-74a" aria-controls="up-74a" aria-selected="false">74A</button>
+      <button class="utab" type="button" role="tab" id="ut-74b" aria-controls="up-74b" aria-selected="false">74B</button>
+      <button class="utab" type="button" role="tab" id="ut-84a" aria-controls="up-84a" aria-selected="false">84A</button>
+      <button class="utab" type="button" role="tab" id="ut-84b" aria-controls="up-84b" aria-selected="false">84B</button>
+      </div>
+    <div class="reveal">
+      <div class="upanel on" role="tabpanel" id="up-39oa" aria-labelledby="ut-39oa">
+        <img src="./images/bucheon/plan/unit-39oa.jpg" alt="두산위브더제니스 부천 39㎡ OA 평면도 — 전용면적, 아이소 뷰, 탑 뷰, 키맵" loading="lazy" data-lb="./images/bucheon/plan/unit-39oa.jpg">
+      </div>
+      <div class="upanel" role="tabpanel" id="up-45oa" aria-labelledby="ut-45oa" hidden>
+        <img src="./images/bucheon/plan/unit-45oa.jpg" alt="두산위브더제니스 부천 45㎡ OA 평면도 — 전용면적, 아이소 뷰, 탑 뷰, 키맵" loading="lazy" data-lb="./images/bucheon/plan/unit-45oa.jpg">
+      </div>
+      <div class="upanel" role="tabpanel" id="up-59a" aria-labelledby="ut-59a" hidden>
+        <img src="./images/bucheon/plan/unit-59a.jpg" alt="두산위브더제니스 부천 59㎡A 평면도 — 전용면적, 아이소 뷰, 탑 뷰, 키맵" loading="lazy" data-lb="./images/bucheon/plan/unit-59a.jpg">
+      </div>
+      <div class="upanel" role="tabpanel" id="up-59b" aria-labelledby="ut-59b" hidden>
+        <img src="./images/bucheon/plan/unit-59b.jpg" alt="두산위브더제니스 부천 59㎡B 평면도 — 전용면적, 아이소 뷰, 탑 뷰, 키맵" loading="lazy" data-lb="./images/bucheon/plan/unit-59b.jpg">
+      </div>
+      <div class="upanel" role="tabpanel" id="up-74a" aria-labelledby="ut-74a" hidden>
+        <img src="./images/bucheon/plan/unit-74a.jpg" alt="두산위브더제니스 부천 74㎡A 평면도 — 전용면적, 아이소 뷰, 탑 뷰, 키맵" loading="lazy" data-lb="./images/bucheon/plan/unit-74a.jpg">
+      </div>
+      <div class="upanel" role="tabpanel" id="up-74b" aria-labelledby="ut-74b" hidden>
+        <img src="./images/bucheon/plan/unit-74b.jpg" alt="두산위브더제니스 부천 74㎡B 평면도 — 전용면적, 아이소 뷰, 탑 뷰, 키맵" loading="lazy" data-lb="./images/bucheon/plan/unit-74b.jpg">
+      </div>
+      <div class="upanel" role="tabpanel" id="up-84a" aria-labelledby="ut-84a" hidden>
+        <img src="./images/bucheon/plan/unit-84a.jpg" alt="두산위브더제니스 부천 84㎡A 평면도 — 전용면적, 아이소 뷰, 탑 뷰, 키맵" loading="lazy" data-lb="./images/bucheon/plan/unit-84a.jpg">
+      </div>
+      <div class="upanel" role="tabpanel" id="up-84b" aria-labelledby="ut-84b" hidden>
+        <img src="./images/bucheon/plan/unit-84b.jpg" alt="두산위브더제니스 부천 84㎡B 평면도 — 전용면적, 아이소 뷰, 탑 뷰, 키맵" loading="lazy" data-lb="./images/bucheon/plan/unit-84b.jpg">
+      </div>
+      </div>
+    <p class="tnote">
+      ※ 상기 아이소 및 평면도는 소비자의 이해를 돕기 위해 <strong>발코니 확장형</strong>으로 제작되었으며,
+      마감재의 색상 · 패턴 등은 본 공사 시 차이가 있을 수 있습니다.
+      제작 과정상 오류가 있을 수 있으니 반드시 견본주택에서 확인하시기 바랍니다.
+    </p>
+  </div>
+</section>
+</div><!-- /p-unit -->
+
+<div class="page" id="p-sale">
+  <div class="phead"><div class="en">Sale</div><h2>분양 안내</h2>
+    <p class="bc">HOME &nbsp;&rsaquo;&nbsp; <b>분양안내</b> &nbsp;&rsaquo;&nbsp; 분양일정 · 공급안내</p></div>
 <section class="sec band-cream" id="schedule">
   <div class="wrap">
     <div class="ov-head reveal">
@@ -641,12 +968,17 @@ a{color:inherit;text-decoration:none}
     </div>
     <p class="tnote">
       ※ 납부 일정 및 조건은 입주자모집공고문을 기준으로 하며, 사업주체의 사정에 따라 변경될 수 있습니다.
-      대금 납부 계좌는 계약 시 별도로 안내되며, 안내받지 않은 계좌로는 절대 입금하지 마시기 바랍니다.
+     
     </p>
   </div>
 </section>
 
 <!-- ===================== 청약안내 ===================== -->
+</div><!-- /p-sale -->
+
+<div class="page" id="p-sub">
+  <div class="phead"><div class="en">Subscription</div><h2>청약 안내</h2>
+    <p class="bc">HOME &nbsp;&rsaquo;&nbsp; <b>청약안내</b> &nbsp;&rsaquo;&nbsp; 청약안내</p></div>
 <section class="sec" id="subscription">
   <div class="wrap">
     <div class="ov-head reveal">
@@ -693,34 +1025,11 @@ a{color:inherit;text-decoration:none}
 </section>
 
 <!-- ===================== 오시는 길 ===================== -->
-<section class="sec band-cream" id="contact">
-  <div class="wrap">
-    <div class="ov-head reveal">
-      <div class="eyebrow ctr">Contact</div>
-      <h2 class="sec-title">오시는 길</h2>
-      <p class="lede">견본주택과 사업 현장의 위치를 확인하세요.</p>
-    </div>
-    <div class="maps reveal">
-      <div class="mapcard">
-        <img src="./images/bucheon/map-gallery.jpg" alt="두산위브더제니스 부천 견본주택 약도 — 부천시 원미구 상동" loading="lazy">
-        <div class="mc-b">
-          <h3>견본주택</h3>
-          <address>부천시 원미구 상동 529-3번지</address>
-        </div>
-      </div>
-      <div class="mapcard">
-        <img src="./images/bucheon/map-site.jpg" alt="두산위브더제니스 부천 사업 현장 약도 — 부천시 소사구 소사본동" loading="lazy">
-        <div class="mc-b">
-          <h3>사업 현장</h3>
-          <address>부천시 소사구 소사본동 88-39번지 일대</address>
-        </div>
-      </div>
-    </div>
-    <p class="tnote">※ 견본주택 운영 일정 및 방문 방법은 전화(1555-1087)로 문의해 주시기 바랍니다.</p>
-  </div>
-</section>
+</div><!-- /p-sub -->
 
-<!-- ===================== 관심고객 등록 ===================== -->
+<div class="page" id="p-reg">
+  <div class="phead"><div class="en">Register</div><h2>관심고객 등록</h2>
+    <p class="bc">HOME &nbsp;&rsaquo;&nbsp; <b>관심고객등록</b> &nbsp;&rsaquo;&nbsp; 등록하기</p></div>
 <section class="sec" id="register">
   <div class="wrap">
     <div class="ov-head reveal">
@@ -775,11 +1084,18 @@ a{color:inherit;text-decoration:none}
     </div>
   </div>
 </section>
+</div><!-- /p-reg -->
+
+<!-- 도면 확대 -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="도면 확대 보기">
+  <button class="lb-x" id="lbX" type="button" aria-label="닫기">&#10005;</button>
+  <div class="lb-img"><img id="lbImg" src="" alt=""></div>
+</div>
 
 <!-- 모바일 하단 고정 바 -->
 <div class="mbar">
   <a class="m-tel" href="tel:1555-1087">전화 상담</a>
-  <button class="m-reg" type="button" onclick="document.getElementById('register').scrollIntoView()">관심고객 등록</button>
+  <button class="m-reg" type="button" data-go="p-reg" data-to="register">관심고객 등록</button>
 </div>
 
 <!-- ===================== FOOTER ===================== -->
@@ -840,7 +1156,7 @@ a{color:inherit;text-decoration:none}
     /* 스크롤 등장 — 감지 실패 시 전부 노출 */
     try{
       if('IntersectionObserver' in window){
-        var io=new IntersectionObserver(function(es){
+        var io=window.__io=new IntersectionObserver(function(es){
           es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
         },{threshold:0,rootMargin:'0px 0px -8% 0px'});
         document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
@@ -986,6 +1302,128 @@ async function submitRegister(e){
     if(v.length>6) v=v.slice(0,4)+'-'+v.slice(4,6)+'-'+v.slice(6);
     else if(v.length>4) v=v.slice(0,4)+'-'+v.slice(4);
     b.value=v;
+  });
+})();
+</script>
+
+
+<script>
+/* ── PC 다중페이지 / 모바일 원페이지 ──
+   기본 CSS는 .page{display:block}. 이 스크립트가 죽어도 전부 보인다. */
+(function(){
+  var PC = window.matchMedia('(min-width:1024px)');
+  var RM = window.matchMedia('(prefers-reduced-motion:reduce)');
+  var IDS = ['p-home','p-business','p-env','p-complex','p-unit','p-sale','p-sub','p-reg'];
+  function $$(sel, c){ return Array.prototype.slice.call((c||document).querySelectorAll(sel)); }
+
+  function applyMode(){
+    document.body.classList.toggle('pc', PC.matches);
+    if(!PC.matches) $$('.page').forEach(function(p){ p.classList.add('active'); });
+  }
+
+  function reobserve(root){
+    if(!window.__io) return;
+    $$('.reveal:not(.in)', root).forEach(function(el){ window.__io.observe(el); });
+  }
+
+  function go(pid, toId){
+    if(IDS.indexOf(pid) === -1) return false;
+    if(PC.matches){
+      $$('.page').forEach(function(p){ p.classList.toggle('active', p.id === pid); });
+      $$('.gnb > li > a').forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-go') === pid); });
+      var pg = document.getElementById(pid);
+      reobserve(pg);
+      if(toId){
+        var t = document.getElementById(toId);
+        if(t){ setTimeout(function(){ t.scrollIntoView({behavior: RM.matches?'auto':'smooth', block:'start'}); }, 40); }
+        else window.scrollTo({top:0, behavior:'auto'});
+      } else {
+        window.scrollTo({top:0, behavior: RM.matches?'auto':'smooth'});
+      }
+      if(history.replaceState) history.replaceState(null, '', '#' + pid);
+    } else {
+      var el = document.getElementById(toId || pid);
+      if(el) el.scrollIntoView({behavior: RM.matches?'auto':'smooth', block:'start'});
+    }
+    return true;
+  }
+  window.__goPage = go;
+
+  document.addEventListener('click', function(e){
+    var el = e.target.closest('[data-go]');
+    if(!el) return;
+    if(go(el.getAttribute('data-go'), el.getAttribute('data-to'))) e.preventDefault();
+  });
+
+  PC.addEventListener('change', function(){
+    applyMode();
+    if(PC.matches){
+      var cur = (location.hash || '#p-home').slice(1);
+      if(IDS.indexOf(cur) === -1) cur = 'p-home';
+      $$('.page').forEach(function(p){ p.classList.toggle('active', p.id === cur); });
+      reobserve(document.getElementById(cur));
+    }
+  });
+
+  applyMode();
+  (function init(){
+    var cur = (location.hash || '').slice(1);
+    if(PC.matches && IDS.indexOf(cur) !== -1 && cur !== 'p-home'){
+      $$('.page').forEach(function(p){ p.classList.toggle('active', p.id === cur); });
+      $$('.gnb > li > a').forEach(function(a){ a.classList.toggle('on', a.getAttribute('data-go') === cur); });
+    }
+  })();
+})();
+
+/* ── 평면 탭 ── */
+(function(){
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.utab'));
+  if(!tabs.length) return;
+  function pick(tab){
+    tabs.forEach(function(t){
+      var on = (t === tab);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      var pn = document.getElementById(t.getAttribute('aria-controls'));
+      if(!pn) return;
+      pn.classList.toggle('on', on);
+      if(on) pn.removeAttribute('hidden'); else pn.setAttribute('hidden','');
+    });
+  }
+  tabs.forEach(function(tab, i){
+    tab.addEventListener('click', function(){ pick(tab); });
+    tab.addEventListener('keydown', function(e){
+      var nx = null;
+      if(e.key === 'ArrowRight') nx = tabs[(i+1) % tabs.length];
+      if(e.key === 'ArrowLeft')  nx = tabs[(i-1+tabs.length) % tabs.length];
+      if(nx){ e.preventDefault(); nx.focus(); pick(nx); }
+    });
+  });
+})();
+
+/* ── 도면 확대 ── */
+(function(){
+  var lb = document.getElementById('lb'), img = document.getElementById('lbImg'), last = null;
+  if(!lb) return;
+  function open(src, alt){
+    last = document.activeElement;
+    img.src = src; img.alt = alt || '';
+    lb.classList.add('on'); document.body.style.overflow = 'hidden';
+    document.getElementById('lbX').focus();
+  }
+  function close(){
+    lb.classList.remove('on'); img.src = ''; document.body.style.overflow = '';
+    if(last && last.focus) last.focus();
+  }
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('[data-lb]');
+    if(!t) return;
+    var im = t.matches('img') ? t : t.querySelector('img');
+    open(t.getAttribute('data-lb'), im ? im.alt : '');
+  });
+  document.getElementById('lbX').addEventListener('click', close);
+  lb.addEventListener('click', function(e){ if(e.target === lb) close(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && lb.classList.contains('on')) close();
   });
 })();
 </script>
