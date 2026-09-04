@@ -62,6 +62,93 @@
 }
 </script>
 
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "두산건설",
+    "description": "두산위브더제니스 부천 시공사 (쌍용건설 컨소시엄)"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "쌍용건설",
+    "description": "두산위브더제니스 부천 시공사 (두산건설 컨소시엄)"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "소사본1의1구역 재개발정비사업조합",
+    "description": "두산위브더제니스 부천 시행 주체"
+  }
+]
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "두산위브더제니스 부천은 어디에 위치해 있나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "사업 현장은 부천시 소사구 소사본동 88-39번지 일대입니다. 견본주택은 부천시 원미구 상동 529-3번지에 별도로 있으며 2026년 8월 14일 금요일에 문을 열었습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "총 세대수와 규모는 어떻게 되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "총 2,008세대 규모입니다. 이 중 일반분양은 1,419세대이며 아파트 1,158세대와 오피스텔 261실로 구성됩니다. 건축 규모는 지하 8층부터 지상 최고 49층까지 7개 동입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "전용면적과 타입 구성은 어떻게 되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "현재는 오피스텔 39㎡ OA와 45㎡ OA 두 개 타입을 우선 안내하고 있습니다. 아파트 주택형별 구성과 공급 조건은 별도 안내 시점에 공개될 예정입니다. 자세한 사항은 1666-0753으로 문의해 주세요."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "시공사는 어디인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "두산건설과 쌍용건설이 컨소시엄으로 함께 시공합니다. 시행 주체는 소사본1의1구역 재개발정비사업조합입니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "견본주택 방문 상담은 어떻게 하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "견본주택은 부천시 원미구 상동 529-3번지에 있습니다. 홈페이지 관심고객 등록에서 성함·연락처와 방문 희망일시를 남기시면 안내드립니다. 방문 희망시간은 10:00부터 18:00까지 1시간 단위로 선택할 수 있습니다. 운영 일정과 방문 방법은 1666-0753으로 문의해 주시기 바랍니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "입주는 언제인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "입주는 2032년 2월 예정입니다. 정확한 입주 시기는 추후 통보되며, 인·허가 및 시공 과정에 따라 변경될 수 있습니다."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "분양가는 얼마인가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "주택형별 공급금액은 별도 안내 시점에 공개될 예정입니다. 정확한 금액은 입주자모집공고문을 확인하시거나 1666-0753으로 문의해 주시기 바랍니다."
+      }
+    }
+  ]
+}
+</script>
+
 <style>
 :root{
   --navy:#0E033B;         /* 위브더제니스 딥 네이비 */
@@ -100,6 +187,15 @@ a{color:inherit;text-decoration:none}
 .lede{color:var(--ink-soft);font-size:clamp(.94rem,1.4vw,1.03rem);line-height:1.85}
 .ov-head{text-align:center;max-width:720px;margin:0 auto clamp(40px,5vw,66px)}
 .ov-head .sec-title{margin:18px 0 16px}
+/* ── FAQ (GEO) ── */
+.faq{max-width:900px;margin:0 auto}
+.faq dl{margin:0}
+.faq dt{font-family:var(--serif);font-size:clamp(1rem,1.25vw,1.1rem);font-weight:700;
+  color:var(--ink);padding-top:clamp(22px,3vw,32px)}
+.faq dd{margin:.6em 0 0;font-size:clamp(.88rem,1.1vw,.96rem);line-height:1.95;
+  color:var(--ink-soft);padding-bottom:clamp(22px,3vw,32px);
+  border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.faq dl>div:last-child dd{border-bottom:0}
 .tnote{font-size:.76rem;color:var(--ink-soft);line-height:1.8;margin-top:26px;opacity:.9}
 
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s ease,transform .9s ease}
@@ -448,6 +544,15 @@ a{color:inherit;text-decoration:none}
 
 <!-- 토스애즈 픽셀 (전환 추적) — async/defer 금지: 이벤트 코드보다 먼저 로드돼야 한다 -->
 <script type="text/javascript" charset="UTF-8" src="https://static.toss.im/lex/v1.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "두산위브더제니스 부천",
+  "url": "https://bucheon-zenith.vercel.app/",
+  "inLanguage": "ko-KR"
+}
+</script>
 </head>
 <body>
 
@@ -1036,6 +1141,61 @@ a{color:inherit;text-decoration:none}
       정확한 사항은 반드시 <strong>입주자모집공고문</strong>을 확인하시고, 관련 법령 및 정책 변경에 따라
       달라질 수 있습니다.
     </p>
+  </div>
+</section>
+
+<!-- ===================== 자주 묻는 질문 ===================== -->
+<!-- 아래 FAQPage 구조화 데이터와 문답이 1:1로 일치한다 -->
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="ov-head">
+      <div class="eyebrow ctr">FAQ</div>
+      <h2 class="sec-title">자주 묻는 질문</h2>
+    </div>
+    <div class="faq">
+      <dl>
+        <div>
+          <dt>두산위브더제니스 부천은 어디에 위치해 있나요?</dt>
+          <dd>사업 현장은 부천시 소사구 소사본동 88-39번지 일대입니다.
+            견본주택은 부천시 원미구 상동 529-3번지에 별도로 있으며 2026년 8월 14일 금요일에 문을 열었습니다.</dd>
+        </div>
+        <div>
+          <dt>총 세대수와 규모는 어떻게 되나요?</dt>
+          <dd>총 2,008세대 규모입니다. 이 중 일반분양은 1,419세대이며 아파트 1,158세대와 오피스텔 261실로
+            구성됩니다. 건축 규모는 지하 8층부터 지상 최고 49층까지 7개 동입니다.</dd>
+        </div>
+        <div>
+          <dt>전용면적과 타입 구성은 어떻게 되나요?</dt>
+          <!-- TODO: 확인필요 — 아파트(59~84㎡) 재공개 시 이 답변을 주택형 상세로 교체할 것 -->
+          <dd>현재는 오피스텔 39㎡ OA와 45㎡ OA 두 개 타입을 우선 안내하고 있습니다.
+            아파트 주택형별 구성과 공급 조건은 별도 안내 시점에 공개될 예정입니다.
+            자세한 사항은 1666-0753으로 문의해 주세요.</dd>
+        </div>
+        <div>
+          <dt>시공사는 어디인가요?</dt>
+          <dd>두산건설과 쌍용건설이 컨소시엄으로 함께 시공합니다.
+            시행 주체는 소사본1의1구역 재개발정비사업조합입니다.</dd>
+        </div>
+        <div>
+          <dt>견본주택 방문 상담은 어떻게 하나요?</dt>
+          <dd>견본주택은 부천시 원미구 상동 529-3번지에 있습니다. 홈페이지 관심고객 등록에서 성함·연락처와
+            방문 희망일시를 남기시면 안내드립니다. 방문 희망시간은 10:00부터 18:00까지 1시간 단위로 선택할 수
+            있습니다. 운영 일정과 방문 방법은 <a href="tel:1666-0753">1666-0753</a>으로 문의해 주시기 바랍니다.</dd>
+        </div>
+        <div>
+          <dt>입주는 언제인가요?</dt>
+          <dd>입주는 2032년 2월 예정입니다. 정확한 입주 시기는 추후 통보되며,
+            인·허가 및 시공 과정에 따라 변경될 수 있습니다.</dd>
+        </div>
+        <div>
+          <dt>분양가는 얼마인가요?</dt>
+          <!-- TODO: 확인필요 — 아파트 공급금액 재공개 시 이 답변을 교체할 것 -->
+          <dd>주택형별 공급금액은 별도 안내 시점에 공개될 예정입니다.
+            정확한 금액은 입주자모집공고문을 확인하시거나
+            <a href="tel:1666-0753">1666-0753</a>으로 문의해 주시기 바랍니다.</dd>
+        </div>
+      </dl>
+    </div>
   </div>
 </section>
 
